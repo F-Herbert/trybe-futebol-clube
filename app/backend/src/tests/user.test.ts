@@ -41,5 +41,15 @@ describe("test de cobertura 5% dos arquivos back-end mínimo 7 linhas cobertas",
       expect(httpResponse.body).to.deep.equal(  { "message": "All fields must be filled" })
       expect(httpResponse.status).to.equal(401)
     })
+    it('quando falta password', async ()=> {
+
+      const httpResponse = await chai
+        .request(app)
+        .post("/login")
+        .send(userWithoutPassword);
+
+      expect(httpResponse.body).to.deep.equal(  { "message": "All fields must be filled" })
+      expect(httpResponse.status).to.equal(401)
+    })
   });
 });
