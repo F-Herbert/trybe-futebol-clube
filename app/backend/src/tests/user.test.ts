@@ -30,10 +30,8 @@ describe("test de cobertura 5% dos arquivos back-end mínimo 7 linhas cobertas",
       expect(httpResponse.body).to.have.property("token");
     });
   });
-  describe("POST / quando a requisição falha", () => {
-    it('deve retornar um status 401', async ()=> {
-
-      // sinon.stub(User, "findOne").resolves(userWithoutEmail as User);
+  describe("POST / quando a requisição falhar, deve retornar um status 401", () => {
+    it('quando falta email', async ()=> {
 
       const httpResponse = await chai
         .request(app)
