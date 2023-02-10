@@ -1,16 +1,15 @@
 import 'dotenv/config';
 import * as jwt from 'jsonwebtoken';
 
-const { MY_SECRET_PASSWORD } = process.env;
+const secret = process.env.JWT_SECRET as string;
 const options = {
-  expiresIn: '1h',
+  expiresIn: '1d',
   algorithm: 'HS256',
 };
 
 const createToken = (obj: object) => {
-  const token = jwt.sign(obj, MY_SECRET_PASSWORD as string, options as object);
-
-  return { token };
+  const token = jwt.sign(obj, secret, options as jwt.SignOptions);
+  return token;
 };
 
 export default createToken;
