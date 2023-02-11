@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { IErros } from '../interface/IUser';
 import verifyToken from '../middlewares/verifyToken';
 import Login from '../service/Login.service';
 
@@ -11,7 +12,7 @@ declare module 'jsonwebtoken' {
 const findeUser = async (req:Request, res:Response) => {
   try {
     const { email, password } = req.body;
-    const { message, status, error, token } = await Login(email, password);
+    const { message, status, error, token } = await Login(email, password) as IErros;
     if (error) return res.status(status).json({ message });
     return res.status(status).json({ token });
   } catch (error) {
@@ -23,11 +24,10 @@ const valideUser = async (req:Request, res: Response) => {
   try {
     const { authorization } = req.headers;
     const { role } = verifyToken(authorization as string);
-    if (role) res.status(200).json({ role });
+    if (role) return res.status(200).json({ role });
     return res.status(400).json({ message: 'token is not valid or token expires' });
   } catch (error) {
     console.error(error);
-    throw new Error(`${error}`);
   }
 };
 

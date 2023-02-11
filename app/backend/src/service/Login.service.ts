@@ -1,8 +1,9 @@
 import bcrypt = require('bcryptjs');
 import User from '../database/models/User.model';
 import createToken from '../middlewares/generateTokens';
+import IUserWithoutPassword, { IErros } from '../interface/IUser';
 
-const Login = async (email:string, password: string) => {
+const Login = async (email:string, password: string): Promise<IUserWithoutPassword | IErros> => {
   const user = await User.findOne({ where: { email } }) as User;
 
   if (user) {
