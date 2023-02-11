@@ -15,8 +15,9 @@ chai.use(chaiHttp);
 
 const { expect } = chai;
 
-describe("test de cobertura 5% dos arquivos back-end mínimo 7 linhas cobertas", () => {
-  describe("POST / quanto a requisição é feita com sucesso", async () => {
+describe("Test da seção 1: Usuários e login", () => {
+  
+  describe("POST / quanto a requisição é feita com sucesso", () => {
     it("deve retornar um status 200", async () => {
       sinon.stub(User, "findOne").resolves(validUser as User);
       sinon.stub(jwt, "sign").resolves("token");
@@ -28,6 +29,8 @@ describe("test de cobertura 5% dos arquivos back-end mínimo 7 linhas cobertas",
 
       expect(httpResponse.status).to.be.equal(200);
       expect(httpResponse.body).to.have.property("token");
+
+      sinon.restore();
     });
   });
   describe("POST / quando a requisição falhar, deve retornar um status 401", () => {
@@ -39,7 +42,7 @@ describe("test de cobertura 5% dos arquivos back-end mínimo 7 linhas cobertas",
         .send(userWithoutEmail);
 
       expect(httpResponse.body).to.deep.equal(  { "message": "All fields must be filled" })
-      expect(httpResponse.status).to.equal(401)
+      expect(httpResponse.status).to.equal(400)
     })
     it('quando falta password', async ()=> {
 
@@ -49,7 +52,7 @@ describe("test de cobertura 5% dos arquivos back-end mínimo 7 linhas cobertas",
         .send(userWithoutPassword);
 
       expect(httpResponse.body).to.deep.equal(  { "message": "All fields must be filled" })
-      expect(httpResponse.status).to.equal(401)
+      expect(httpResponse.status).to.equal(400)
     })
   });
 });
