@@ -22,11 +22,12 @@ const findeUser = async (req:Request, res:Response) => {
 const valideUser = async (req:Request, res: Response) => {
   try {
     const { authorization } = req.headers;
-    const result: any = verifyToken(authorization as string);
-    if (result) res.status(200).json({ role: result.role });
+    const { role } = verifyToken(authorization as string);
+    if (role) res.status(200).json({ role });
+    return res.status(400).json({ message: 'token is not valid or token expires' });
   } catch (error) {
     console.error(error);
-    return res.status(400).json({ message: 'deu ruim' });
+    throw new Error(`${error}`);
   }
 };
 

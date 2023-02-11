@@ -7,7 +7,7 @@ const options = {
   algorithm: 'HS256',
 };
 
-const createToken = (obj: object) => {
+const createToken = (obj: object): string => {
   const token = jwt.sign(obj, secret, options as jwt.SignOptions);
   return token;
 };
