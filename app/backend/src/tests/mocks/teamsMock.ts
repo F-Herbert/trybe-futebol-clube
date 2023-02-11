@@ -18,3 +18,7 @@ export const mockTeams = [
   { id: 15, teamName: "São José-SP" },
   { id: 16, teamName: "São Paulo" },
 ];
+
+export const mockTeam = {
+  id: 1, teamName: "Galão da marcia"
+}
