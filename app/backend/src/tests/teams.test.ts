@@ -5,7 +5,7 @@ import chaiHttp = require("chai-http");
 
 import { app } from "../app";
 import Team from "../database/models/Team.model";
-import { mockTeams,mockTeam } from "./mocks/teamsMock";
+import { mockTeams,mockTeam } from "./mocks/teams.Mock";
 
 chai.use(chaiHttp);
 
@@ -17,7 +17,7 @@ describe('Test da seção 2: Horários',()=>{
     sinon.stub(Team, 'findAll').resolves(mockTeams as Team[])
 
       const httpResponse = await chai
-        .request(app).get('/teams').send(mockTeams)
+        .request(app).get('/teams')
       
       expect(httpResponse.body).to.deep.equal(mockTeams)
       expect(httpResponse.status).to.equal(200);

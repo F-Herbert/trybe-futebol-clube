@@ -6,6 +6,7 @@ export default class Matche extends Model {
   declare homeTeamId: number;
   declare homeTeamGoals: number;
   declare awayTeamGoals: number;
+  declare awayTeamId: number;
   declare inProgress: boolean;
 }
 

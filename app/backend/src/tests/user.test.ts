@@ -9,7 +9,7 @@ import * as jwt from 'jsonwebtoken';
 import { validUser,
   userWithoutEmail,
   userWithoutPassword 
-} from "./mocks/userMock";
+} from "./mocks/user.Mock";
 
 chai.use(chaiHttp);
 
