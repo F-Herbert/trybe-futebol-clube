@@ -1,8 +1,10 @@
-import Matche from '../database/models/Match.model';
+import Match from '../database/models/Match.model';
+import { IBodyMatches } from '../interface/IMatches';
 
 const findAllMatchWithFilter = async (Progress: string) => {
   const boolean = Progress === 'true';
-  const findAll = await Matche.findAll({
+
+  const findAll = await Match.findAll({
     raw: true,
     where: { inProgress: boolean },
     include: [
@@ -11,12 +13,12 @@ const findAllMatchWithFilter = async (Progress: string) => {
     ],
   });
   if (findAll) return { status: 200, error: false, message: findAll };
-  return { status: 401, error: true, message: 'matches not found' };
+  return { status: 401, error: true, message: 'Matchs not found' };
 };
 
 const findAllMatchWithoutFilter = async (Progress: string) => {
-  if (Progress) return findAllMatchWithFilter(Progress);
-  const findAll = await Matche.findAll({
+  if (Progress === 'true' || Progress === 'false') return findAllMatchWithFilter(Progress);
+  const findAll = await Match.findAll({
     raw: true,
     include: [
       { association: 'homeTeam', attributes: ['teamName'] },
@@ -24,6 +26,20 @@ const findAllMatchWithoutFilter = async (Progress: string) => {
     ],
   });
   if (findAll) return { status: 200, error: false, message: findAll };
-  return { status: 401, error: true, message: 'matches not found' };
+  return { status: 401, error: true, message: 'Matchs not found' };
+};
+
+export const insertMatch = async (payload: IBodyMatches) => {
+  const { homeTeamId, awayTeamId, homeTeamGoals, awayTeamGoals } = payload as IBodyMatches;
+
+  const insert = await Match.create({
+    homeTeamId,
+    awayTeamId,
+    homeTeamGoals,
+    awayTeamGoals,
+    inProgress: true,
+  });
+
+  return { status: 201, error: false, message: insert.dataValues };
 };
 export default findAllMatchWithoutFilter;
