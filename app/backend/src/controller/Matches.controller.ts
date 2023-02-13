@@ -18,7 +18,7 @@ export const createMatche = async (req: Request, res: Response) => {
 
     const { message, error, status } = await insertMatch(payload);
 
-    if (error) return res.status(status).json(message);
+    if (error) return res.status(status).json({ message });
 
     return res.status(status).json(message);
   } catch (error) {

@@ -29,6 +29,11 @@ const findAllMatchWithoutFilter = async (Progress: string) => {
 
 export const insertMatch = async (payload: IBodyMatches) => {
   const { homeTeamId, awayTeamId, homeTeamGoals, awayTeamGoals } = payload as IBodyMatches;
+  if (homeTeamId === awayTeamId) {
+    return { status: 422,
+      error: true,
+      message: 'It is not possible to create a match with two equal teams' };
+  }
 
   const insert = await Match.create({
     homeTeamId,
