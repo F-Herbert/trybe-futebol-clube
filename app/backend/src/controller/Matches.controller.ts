@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import findAllMatchWithoutFilter, { insertMatch } from '../service/Matches.service';
+import findAllMatchWithoutFilter, { insertMatch, updateMatche } from '../service/Matches.service';
 
 const findAll = async (req: Request, res:Response) => {
   try {
@@ -21,6 +21,19 @@ export const createMatche = async (req: Request, res: Response) => {
     if (error) return res.status(status).json(message);
 
     return res.status(status).json(message);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const update = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const { error, status, message } = await updateMatche(Number(id));
+
+    if (error) return res.status(status).json(message);
+
+    return res.status(status).json({ message });
   } catch (error) {
     console.log(error);
   }
