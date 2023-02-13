@@ -46,10 +46,17 @@ export const insertMatch = async (payload: IBodyMatches) => {
   return { status: 201, error: false, message: insert.dataValues };
 };
 
-export const updateMatche = async (id: number) => {
+export const finishMatche = async (id: number) => {
   const update = await Match.update({ inProgress: 0 }, { where: { id } });
   if (!update) return { error: true, message: 'not found', status: 401 };
   return { message: 'Finished', error: false, status: 200 };
+};
+
+export const updateMatche = async (id: number, homeTeamGoals:number, awayTeamGoals:number) => {
+  const update = await Match.update({ homeTeamGoals, awayTeamGoals }, { where: { id } });
+  console.log(update);
+
+  return { error: false, message: { homeTeamGoals, awayTeamGoals }, status: 200 };
 };
 
 export default findAllMatchWithoutFilter;
