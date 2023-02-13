@@ -20,7 +20,7 @@ const verifyToken = (req:Request, res:Response, next:NextFunction) => {
     return next();
   } catch (error) {
     console.log(error);
-    res.status(400).json({ message: 'token is not valid or token expires' });
+    res.status(401).json({ message: 'Token must be a valid token' });
   }
 };
 
